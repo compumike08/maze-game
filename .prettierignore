@@ -1,0 +1,7 @@
+node/
+node_modules/
+.webpack/
+out/
+.vite/
+.vscode/
+src/assets/
