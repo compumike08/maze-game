@@ -5,3 +5,4 @@ out/
 .vite/
 .vscode/
 src/assets/
+yarn.lock
