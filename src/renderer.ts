@@ -11,21 +11,34 @@
  *
  * https://electronjs.org/docs/tutorial/security
  *
- * To enable Node.js integration in this file, open up `main.ts` and enable the `nodeIntegration`
- * flag:
- *
- * ```
- *  // Create the browser window.
- *  mainWindow = new BrowserWindow({
- *    width: 800,
- *    height: 600,
- *    webPreferences: {
- *      nodeIntegration: true
- *    }
- *  });
- * ```
  */
 
-console.log(
-  '👋 This message is being logged by "renderer.ts", included via Vite'
-);
+import { AUTO, Game } from "phaser";
+import { GAME_HEIGHT, GAME_WIDTH } from "./globalConstants";
+import { Preloader } from "./scenes/Preloader";
+import { MainMenu } from "./scenes/MainMenu";
+
+import "./index.css";
+
+const config: Phaser.Types.Core.GameConfig = {
+  type: AUTO,
+  width: GAME_WIDTH,
+  height: GAME_HEIGHT,
+  parent: "game-container",
+  backgroundColor: "#000000",
+  physics: {
+    default: "arcade"
+  },
+  pixelArt: true,
+  scene: [Preloader, MainMenu]
+};
+
+const StartGame = (parent: string) => {
+  return new Game({ ...config, parent });
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  StartGame("game-container");
+});
+
+export default StartGame;
