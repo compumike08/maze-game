@@ -20,6 +20,7 @@ export class GameScene extends BaseScene {
     this.createMaze();
     this.createPlayer();
     this.createCollider();
+    this.createOverlapForFinish();
   }
 
   createMaze() {
@@ -77,5 +78,21 @@ export class GameScene extends BaseScene {
     }
 
     this.physics.add.collider(this.player, this.wallTileGroup);
+  }
+
+  createOverlapForFinish() {
+    if (!this.player || !this.endTile) {
+      throw new Error("Player or end tile not initialized");
+    }
+
+    this.physics.add.overlap(
+      this.player,
+      this.endTile,
+      () => {
+        this.scene.start("MainMenu");
+      },
+      undefined,
+      this
+    );
   }
 }
