@@ -11,13 +11,15 @@ if (started) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: GAME_WIDTH + 20,
+    width: GAME_WIDTH + 35,
     height: GAME_HEIGHT + 55,
     webPreferences: {
       preload: path.join(__dirname, "preload.js")
     },
     resizable: false
   });
+
+  mainWindow.removeMenu();
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
