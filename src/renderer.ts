@@ -17,6 +17,7 @@ import { AUTO, Game } from "phaser";
 import { GAME_HEIGHT, GAME_WIDTH } from "./globalConstants";
 import { Preloader } from "./scenes/Preloader";
 import { MainMenu } from "./scenes/MainMenu";
+import { GameScene } from "./scenes/GameScene";
 
 import "./index.css";
 
@@ -30,7 +31,7 @@ const config: Phaser.Types.Core.GameConfig = {
     default: "arcade"
   },
   pixelArt: true,
-  scene: [Preloader, MainMenu]
+  scene: [Preloader, MainMenu, GameScene]
 };
 
 const StartGame = (parent: string) => {
