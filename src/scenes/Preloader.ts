@@ -2,6 +2,7 @@ import { BaseScene } from "./BaseScene";
 import PlayerImg from "../assets/maze-game-player.png";
 import FloorImg from "../assets/maze-game-floor.png";
 import WallImg from "../assets/maze-game-wall.png";
+import EndImg from "../assets/maze-game-end.png";
 
 export class Preloader extends BaseScene {
   constructor() {
@@ -12,6 +13,7 @@ export class Preloader extends BaseScene {
     this.load.image("player", PlayerImg);
     this.load.image("floorTile", FloorImg);
     this.load.image("wallTile", WallImg);
+    this.load.image("endTile", EndImg);
   }
 
   create() {

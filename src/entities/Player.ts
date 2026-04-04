@@ -1,6 +1,6 @@
 import { BaseScene } from "../scenes/BaseScene";
 
-const ACCELERATION_AMOUNT = 10;
+const ACCELERATION_AMOUNT = 5;
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -21,7 +21,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   init() {
-    this.setOrigin(0.5, 0.5).setCollideWorldBounds(true);
+    this.setOrigin(0.5, 0.5).setScale(0.5, 0.5).setCollideWorldBounds(true);
   }
 
   update() {
