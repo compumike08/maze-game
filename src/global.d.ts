@@ -69,3 +69,9 @@ declare module "*.fs" {
   const src: string;
   export default src;
 }
+
+// CSS
+declare module "*.css" {
+  const src: string;
+  export default src;
+}
