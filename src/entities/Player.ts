@@ -24,7 +24,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.setOrigin(0.5, 0.5)
       .setScale(0.5, 0.5)
       .setCollideWorldBounds(true)
-      .setBounce(1);
+      .setBounce(0.5);
   }
 
   update() {
