@@ -51,9 +51,6 @@ export class GameScene extends BaseScene {
       throw new Error("Start or end tile not found in maze");
     }
 
-    console.log("Start Tile:", this.startTile.gridCoords);
-    console.log("End Tile:", this.endTile.gridCoords);
-
     let xCoord = 0;
     let yCoord = 0;
 
