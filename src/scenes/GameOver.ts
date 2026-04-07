@@ -39,7 +39,7 @@ export class GameOver extends BaseScene {
   create() {
     const gameOverText = this.add.text(0, 0, "Game Over", {
       fontFamily: "Arial Black",
-      fontSize: 40,
+      fontSize: 50,
       color: "#ffffff",
       stroke: "#000000",
       strokeThickness: 8,
@@ -50,7 +50,7 @@ export class GameOver extends BaseScene {
     const endingScoreText = this.add.text(
       0,
       42,
-      `Final Score ${this.finalScore < 0 ? "error" : this.finalScore}`,
+      `Final Score: ${this.finalScore < 0 ? "error" : this.finalScore}`,
       {
         fontFamily: "Arial Black",
         fontSize: 35,
@@ -79,7 +79,7 @@ export class GameOver extends BaseScene {
 
     this.textContainer = this.add.container(
       this.gameWidth / 2,
-      this.gameHeight / 2,
+      this.gameHeight / 2 - 40,
       [gameOverText, endingScoreText, bestScoreText]
     );
 
