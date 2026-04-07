@@ -33,7 +33,7 @@ export class GameScene extends BaseScene {
       return;
     }
 
-    if (this.player.lives < 0) {
+    if (this.player.livesText.lives < 0) {
       localStorage.setItem(FINAL_SCORE_KEY, this.player.score.toString());
 
       const bestScoreStr = localStorage.getItem(BEST_SCORE_KEY);
@@ -52,7 +52,7 @@ export class GameScene extends BaseScene {
 
       const playerInitOpts: PlayerInitOptions = {
         score: this.player.score,
-        lives: this.player.lives
+        lives: this.player.livesText.lives
       };
       localStorage.setItem(STORE_PLAYER_KEY, JSON.stringify(playerInitOpts));
 
