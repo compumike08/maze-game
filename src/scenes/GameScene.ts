@@ -41,15 +41,24 @@ export class GameScene extends BaseScene {
     this.physics.world.removeCollider(this.finishOverlap);
 
     if (this.player.livesText.lives < 0) {
-      localStorage.setItem(FINAL_SCORE_KEY, this.player.score.toString());
+      localStorage.setItem(
+        FINAL_SCORE_KEY,
+        this.player.scoreText.score.toString()
+      );
 
       const bestScoreStr = localStorage.getItem(BEST_SCORE_KEY);
       if (bestScoreStr === null) {
-        localStorage.setItem(BEST_SCORE_KEY, this.player.score.toString());
+        localStorage.setItem(
+          BEST_SCORE_KEY,
+          this.player.scoreText.score.toString()
+        );
       } else {
         const bestScore = parseInt(bestScoreStr, 10);
-        if (bestScore < this.player.score) {
-          localStorage.setItem(BEST_SCORE_KEY, this.player.score.toString());
+        if (bestScore < this.player.scoreText.score) {
+          localStorage.setItem(
+            BEST_SCORE_KEY,
+            this.player.scoreText.score.toString()
+          );
         }
       }
 
@@ -58,7 +67,7 @@ export class GameScene extends BaseScene {
       this.player.increaseScore();
 
       const playerInitOpts: PlayerInitOptions = {
-        score: this.player.score,
+        score: this.player.scoreText.score,
         lives: this.player.livesText.lives
       };
       localStorage.setItem(STORE_PLAYER_KEY, JSON.stringify(playerInitOpts));

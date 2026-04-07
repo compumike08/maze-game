@@ -1,3 +1,4 @@
+import { ScoreText } from "../hud/ScoreText";
 import { LivesText } from "../hud/LivesText";
 import { BaseScene } from "../scenes/BaseScene";
 
@@ -6,7 +7,7 @@ const START_NUM_OF_LIVES = 20;
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
-  score: number;
+  scoreText: ScoreText;
   livesText: LivesText;
   gameOverCallback: () => void;
 
@@ -23,10 +24,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this);
 
     if (initOpts) {
-      this.score = initOpts.score;
+      this.scoreText = new ScoreText(scene, initOpts.score);
       this.livesText = new LivesText(scene, initOpts.lives);
     } else {
-      this.score = 0;
+      this.scoreText = new ScoreText(scene, 0);
       this.livesText = new LivesText(scene, START_NUM_OF_LIVES);
     }
 
@@ -74,23 +75,16 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
   decreaseLives() {
     this.livesText.decrease(1);
-    // TODO: Remove console.log
-    console.log("Lives Left: " + this.livesText.lives);
-    console.log("Score: " + this.score);
     if (this.livesText.lives < 0) {
       this.die();
     }
   }
 
   increaseScore() {
-    this.score++;
-    // TODO: Remove console.log
-    console.log("Score (Increased): " + this.score);
+    this.scoreText.increaseScore(1);
   }
 
   die() {
-    // TODO: Remove console.log
-    console.log("DIE! --- Final Score: " + this.score);
     this.gameOverCallback();
   }
 }
