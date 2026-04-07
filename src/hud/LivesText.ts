@@ -7,7 +7,7 @@ export class LivesText {
   livesText: Phaser.GameObjects.Text;
 
   constructor(scene: BaseScene, lives: number) {
-    this.x = scene.gameWidth - 20;
+    this.x = scene.gameWidth - 160;
     this.y = 15;
     this.lives = lives;
 
@@ -19,7 +19,7 @@ export class LivesText {
       strokeThickness: 3,
       align: "center"
     });
-    this.livesText.setOrigin(1, 0).setDepth(5);
+    this.livesText.setOrigin(0).setDepth(5);
   }
 
   decrease(amount: number) {
