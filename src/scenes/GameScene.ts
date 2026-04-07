@@ -16,6 +16,8 @@ export class GameScene extends BaseScene {
   wallTileGroup: Phaser.Physics.Arcade.Group | undefined;
   startTile: Tile | undefined;
   endTile: Tile | undefined;
+  finishOverlap: Phaser.Physics.Arcade.Collider | undefined;
+  wallCollider: Phaser.Physics.Arcade.Collider | undefined;
 
   constructor() {
     super("GameScene");
@@ -29,9 +31,14 @@ export class GameScene extends BaseScene {
   }
 
   gameOverCallback() {
-    if (!this.player) {
-      return;
+    if (!this.player || !this.wallCollider || !this.finishOverlap) {
+      throw new Error(
+        "gameOverCallback invoked while player, wallCollider, or finishOverlap was undefined"
+      );
     }
+
+    this.physics.world.removeCollider(this.wallCollider);
+    this.physics.world.removeCollider(this.finishOverlap);
 
     if (this.player.livesText.lives < 0) {
       localStorage.setItem(FINAL_SCORE_KEY, this.player.score.toString());
@@ -130,7 +137,7 @@ export class GameScene extends BaseScene {
       throw new Error("Player or wall tile group not initialized");
     }
 
-    this.physics.add.collider(
+    this.wallCollider = this.physics.add.collider(
       this.player,
       this.wallTileGroup,
       () => {
@@ -146,7 +153,7 @@ export class GameScene extends BaseScene {
       throw new Error("Player or end tile not initialized");
     }
 
-    this.physics.add.overlap(
+    this.finishOverlap = this.physics.add.overlap(
       this.player,
       this.endTile,
       () => {
