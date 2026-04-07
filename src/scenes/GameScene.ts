@@ -2,7 +2,12 @@ import { generateMaze, Grid, MazeTile } from "dungeon-cartographer";
 import { Player } from "../entities/Player";
 import { BaseScene } from "./BaseScene";
 import { Tile } from "../entities/Tile";
-import { TILE_SIZE } from "../globalConstants";
+import {
+  FINAL_SCORE_KEY,
+  BEST_SCORE_KEY,
+  TILE_SIZE,
+  STORE_PLAYER_KEY
+} from "../globalConstants";
 
 export class GameScene extends BaseScene {
   player: Player | undefined;
@@ -19,8 +24,40 @@ export class GameScene extends BaseScene {
   create() {
     this.createMaze();
     this.createPlayer();
-    this.createCollider();
+    this.createOverlapForWalls();
     this.createOverlapForFinish();
+  }
+
+  gameOverCallback() {
+    if (!this.player) {
+      return;
+    }
+
+    if (this.player.lives < 0) {
+      localStorage.setItem(FINAL_SCORE_KEY, this.player.score.toString());
+
+      const bestScoreStr = localStorage.getItem(BEST_SCORE_KEY);
+      if (bestScoreStr === null) {
+        localStorage.setItem(BEST_SCORE_KEY, this.player.score.toString());
+      } else {
+        const bestScore = parseInt(bestScoreStr, 10);
+        if (bestScore < this.player.score) {
+          localStorage.setItem(BEST_SCORE_KEY, this.player.score.toString());
+        }
+      }
+
+      this.scene.start("GameOver");
+    } else {
+      this.player.increaseScore();
+
+      const playerInitOpts: PlayerInitOptions = {
+        score: this.player.score,
+        lives: this.player.lives
+      };
+      localStorage.setItem(STORE_PLAYER_KEY, JSON.stringify(playerInitOpts));
+
+      this.scene.start("GameScene");
+    }
   }
 
   createMaze() {
@@ -66,15 +103,42 @@ export class GameScene extends BaseScene {
       yCoord = this.startTile.gridCoords.yIndex * TILE_SIZE + TILE_SIZE / 2;
     }
 
-    this.player = new Player(this, xCoord, yCoord);
+    const storedPlayerStr = localStorage.getItem(STORE_PLAYER_KEY);
+    if (storedPlayerStr) {
+      const playerInitOpts: PlayerInitOptions = JSON.parse(storedPlayerStr);
+      this.player = new Player(
+        this,
+        xCoord,
+        yCoord,
+        this.gameOverCallback.bind(this),
+        playerInitOpts
+      );
+      localStorage.removeItem(STORE_PLAYER_KEY);
+    } else {
+      this.player = new Player(
+        this,
+        xCoord,
+        yCoord,
+        this.gameOverCallback.bind(this),
+        null
+      );
+    }
   }
 
-  createCollider() {
-    if (!this.player || !this.tileGroup || !this.wallTileGroup) {
-      throw new Error("Player or tile group not initialized");
+  createOverlapForWalls() {
+    if (!this.player || !this.wallTileGroup) {
+      throw new Error("Player or wall tile group not initialized");
     }
 
-    this.physics.add.collider(this.player, this.wallTileGroup);
+    this.physics.add.collider(
+      this.player,
+      this.wallTileGroup,
+      () => {
+        this.player?.decreaseLives();
+      },
+      undefined,
+      this
+    );
   }
 
   createOverlapForFinish() {
@@ -86,7 +150,7 @@ export class GameScene extends BaseScene {
       this.player,
       this.endTile,
       () => {
-        this.scene.start("MainMenu");
+        this.gameOverCallback();
       },
       undefined,
       this
