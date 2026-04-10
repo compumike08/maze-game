@@ -1,7 +1,7 @@
 import { BaseScene } from "./BaseScene";
 
 export class InstructionsScene extends BaseScene {
-  textContainer: Phaser.GameObjects.Container | undefined;
+  textContainer: Phaser.GameObjects.Container;
 
   constructor() {
     super("InstructionsScene");
