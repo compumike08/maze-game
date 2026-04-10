@@ -52,7 +52,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   update() {
     const { left, right, up, down } = this.cursors;
 
-    if (this.body === null) {
+    if (this.body === null || this.body === undefined) {
       return;
     }
 
