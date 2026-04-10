@@ -36,7 +36,7 @@ export class InstructionsScene extends BaseScene {
       .text(
         0,
         90,
-        "- The object is to move the blue player dot through the maze and reach the\n  yellow end tile while avoiding the red wall tiles.\n- Use the arrow keys to add velocity to the player dot in that direction.\n- Each time you touch a red wall tile, you lose a life.\n- Your score increases by 1 each time you reach the end tile, and a new\n  maze is generated. \n- The game ends when you run out of lives, but you can also choose to quit early\n  by clicking the 'Quit' button in the bottom right corner during gameplay.",
+        "- The object is to move the blue player dot through the maze and reach the\n  yellow end tile while avoiding the red wall tiles.\n- Use the arrow keys to add velocity to the player dot in that direction.\n- Each time you touch a red wall tile, you lose a life.\n- Your score increases by 1 each time you reach the end tile, and a new\n  maze is generated.\n- The game ends when you run out of lives, but you can also choose to quit early\n  by clicking the 'Quit' button in the bottom right corner during gameplay.",
         bodyTextFontConfig
       )
       .setOrigin(0.5);
