@@ -1,5 +1,11 @@
 import { BaseScene } from "./BaseScene";
 
+declare global {
+  interface Window {
+    electronAPI: IElectronAPI;
+  }
+}
+
 export class MainMenu extends BaseScene {
   menu: Array<Menu>;
   fontSize: number;
@@ -23,6 +29,10 @@ export class MainMenu extends BaseScene {
       {
         scene: "GameScene",
         text: "Play"
+      },
+      {
+        scene: undefined,
+        text: "Quit"
       }
     ];
   }
@@ -58,6 +68,9 @@ export class MainMenu extends BaseScene {
     textGO?.on("pointerup", () => {
       if (menuItem.scene) {
         this.scene.start(menuItem.scene);
+      } else {
+        // No menuItem.scene means this is the Quit option, so we can trigger closing the app
+        window.electronAPI.quitApp();
       }
     });
   }

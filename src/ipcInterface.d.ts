@@ -1,0 +1,3 @@
+interface IElectronAPI {
+  quitApp: () => void;
+}

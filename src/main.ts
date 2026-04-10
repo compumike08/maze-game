@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "node:path";
 import started from "electron-squirrel-startup";
 import { GAME_HEIGHT, GAME_WIDTH } from "./globalConstants";
@@ -28,6 +28,12 @@ const createWindow = () => {
       path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)
     );
   }
+
+  mainWindow.on("ready-to-show", () => {
+    ipcMain.on("quit-app", () => {
+      app.quit();
+    });
+  });
 };
 
 // This method will be called when Electron has finished
