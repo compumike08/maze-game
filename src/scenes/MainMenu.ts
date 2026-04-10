@@ -31,6 +31,10 @@ export class MainMenu extends BaseScene {
         text: "Play"
       },
       {
+        scene: "InstructionsScene",
+        text: "Instructions/Controls"
+      },
+      {
         scene: undefined,
         text: "Quit"
       }
