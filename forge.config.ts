@@ -11,6 +11,18 @@ const config: ForgeConfig = {
   packagerConfig: {
     asar: true
   },
+  publishers: [
+    {
+      name: "@electron-forge/publisher-github",
+      config: {
+        repository: {
+          owner: "compumike08",
+          name: "maze-game"
+        },
+        prerelease: false
+      }
+    }
+  ],
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({}),

@@ -45,5 +45,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: maze-game-app-${{ matrix.os }}
+          name: my-app-dist-${{ matrix.os }}
           path: out/ # Forge outputs distributables to the 'out' directory
