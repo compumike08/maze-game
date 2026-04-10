@@ -77,10 +77,32 @@ export class GameOver extends BaseScene {
     );
     bestScoreText.setOrigin(0.5);
 
+    const continueText = this.add.text(0, 150, "Click to return to Main Menu", {
+      fontFamily: "Arial Black",
+      fontSize: 25,
+      color: "#ffffff",
+      stroke: "#000000",
+      strokeThickness: 5,
+      align: "center"
+    });
+    continueText.setOrigin(0.5).setInteractive();
+
+    continueText.on("pointerover", () => {
+      continueText.setStyle({
+        fill: "#ff0"
+      });
+    });
+
+    continueText.on("pointerout", () => {
+      continueText.setStyle({
+        fill: "#ffffff"
+      });
+    });
+
     this.textContainer = this.add.container(
       this.gameWidth / 2,
       this.gameHeight / 2 - 40,
-      [gameOverText, endingScoreText, bestScoreText]
+      [gameOverText, endingScoreText, bestScoreText, continueText]
     );
 
     this.input.once("pointerup", () => {

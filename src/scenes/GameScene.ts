@@ -8,6 +8,7 @@ import {
   TILE_SIZE,
   STORE_PLAYER_KEY
 } from "../globalConstants";
+import { QuitButton } from "../hud/QuitButton";
 
 export class GameScene extends BaseScene {
   player: Player | undefined;
@@ -18,6 +19,7 @@ export class GameScene extends BaseScene {
   endTile: Tile | undefined;
   finishOverlap: Phaser.Physics.Arcade.Collider | undefined;
   wallCollider: Phaser.Physics.Arcade.Collider | undefined;
+  quitButton: QuitButton | undefined;
 
   constructor() {
     super("GameScene");
@@ -26,11 +28,22 @@ export class GameScene extends BaseScene {
   create() {
     this.createMaze();
     this.createPlayer();
+    this.createQuitButton();
     this.createOverlapForWalls();
     this.createOverlapForFinish();
   }
 
-  gameOverCallback() {
+  createQuitButton() {
+    this.quitButton = new QuitButton(this, this.handleQuitClicked.bind(this));
+  }
+
+  handleQuitClicked() {
+    this.gameOverCallback(true);
+  }
+
+  gameOverCallback(isQuitClicked = false) {
+    this.physics.pause();
+
     if (!this.player || !this.wallCollider || !this.finishOverlap) {
       throw new Error(
         "gameOverCallback invoked while player, wallCollider, or finishOverlap was undefined"
@@ -40,7 +53,7 @@ export class GameScene extends BaseScene {
     this.physics.world.removeCollider(this.wallCollider);
     this.physics.world.removeCollider(this.finishOverlap);
 
-    if (this.player.livesText.lives < 0) {
+    if (this.player.livesText.lives < 0 || isQuitClicked) {
       localStorage.setItem(
         FINAL_SCORE_KEY,
         this.player.scoreText.score.toString()
