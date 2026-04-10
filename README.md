@@ -12,6 +12,7 @@ This game is loosely based on the old [Labyrinth marble game](<https://en.wikipe
 
 - The object is to move the blue player dot through the maze and reach the yellow end tile while avoiding the red wall tiles.
 - Use the arrow keys to add velocity to the player dot in that direction.
+- Hold down shift and press an arrow key to add 75% less velocity for finer control.
 - Each time you touch a red wall tile, you lose a life.
 - Your score increases by 1 each time you reach the end tile, and a new maze is generated.
 - The game ends when you run out of lives, but you can also choose to quit early by clicking the 'Quit' button in the bottom right corner during gameplay.

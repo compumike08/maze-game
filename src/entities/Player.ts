@@ -3,6 +3,7 @@ import { LivesText } from "../hud/LivesText";
 import { BaseScene } from "../scenes/BaseScene";
 
 const ACCELERATION_AMOUNT = 2;
+const FINE_ACCELERATION_AMOUNT = 0.5;
 const START_NUM_OF_LIVES = 20;
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
@@ -50,25 +51,33 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   update() {
-    const { left, right, up, down } = this.cursors;
+    const { left, right, up, down, shift } = this.cursors;
 
     if (this.body === null || this.body === undefined) {
       return;
     }
 
-    if (left.isDown) {
+    if (left.isDown && shift.isDown) {
+      this.setVelocityX(this.body.velocity.x - FINE_ACCELERATION_AMOUNT);
+    } else if (left.isDown) {
       this.setVelocityX(this.body.velocity.x - ACCELERATION_AMOUNT);
     }
 
-    if (right.isDown) {
+    if (right.isDown && shift.isDown) {
+      this.setVelocityX(this.body.velocity.x + FINE_ACCELERATION_AMOUNT);
+    } else if (right.isDown) {
       this.setVelocityX(this.body.velocity.x + ACCELERATION_AMOUNT);
     }
 
-    if (up.isDown) {
+    if (up.isDown && shift.isDown) {
+      this.setVelocityY(this.body.velocity.y - FINE_ACCELERATION_AMOUNT);
+    } else if (up.isDown) {
       this.setVelocityY(this.body.velocity.y - ACCELERATION_AMOUNT);
     }
 
-    if (down.isDown) {
+    if (down.isDown && shift.isDown) {
+      this.setVelocityY(this.body.velocity.y + FINE_ACCELERATION_AMOUNT);
+    } else if (down.isDown) {
       this.setVelocityY(this.body.velocity.y + ACCELERATION_AMOUNT);
     }
   }
