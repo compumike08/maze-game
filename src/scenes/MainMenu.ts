@@ -56,7 +56,9 @@ export class MainMenu extends BaseScene {
     });
 
     textGO?.on("pointerup", () => {
-      menuItem.scene && this.scene.start(menuItem.scene);
+      if (menuItem.scene) {
+        this.scene.start(menuItem.scene);
+      }
     });
   }
 }
